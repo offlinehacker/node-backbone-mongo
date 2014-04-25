@@ -3,6 +3,33 @@ $(function ($, _, Backbone) {
   "use strict";
 
   var Todo, TodoList, Todos, TodoView, AppView, App;
+  var user = localStorage.getItem("user");
+
+  // Generate unique id for each user
+  var guid = function() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+          s4() + '-' + s4() + s4() + s4();
+  };
+
+  if(!user) {
+    user = guid();
+    localStorage.setItem("user", user);
+  }
+
+  // Add authentication token to requests
+  var _sync = Backbone.sync;
+  Backbone.sync = function(method, model, options) {
+    options.beforeSend = function(xhr) {
+      xhr.setRequestHeader('X-Auth-Token', user);
+    };
+
+    _sync.call(this, method, model, options);
+  };
 
   // Todo Model
   // ----------
@@ -18,7 +45,8 @@ $(function ($, _, Backbone) {
       return {
         title: "empty todo...",
         order: Todos.nextOrder(),
-        done: false
+        done: false,
+        user: user 
       };
     },
 
@@ -26,6 +54,7 @@ $(function ($, _, Backbone) {
     initialize: function () {
       if (!this.get("title")) {
         this.set({"title": this.defaults.title});
+        this.set({"user": user});
       }
     },
 

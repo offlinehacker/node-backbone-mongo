@@ -7,7 +7,7 @@
     , Todo = mongoose.model('Todo');
 
   function index(req, res) {
-    res.render('index', { 'title': 'Backbone.js, Node.js, MongoDB Todos' });
+    res.render('index', { 'title': 'Backbone.js, Node.js, Bower.js, Express, MongoDB Todos' });
   }
 
   exports.init = function (app) {

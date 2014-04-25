@@ -1,0 +1,21 @@
+{
+  "name": "node-backbone-mongo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/offlinehacker/node-backbone-mongo",
+  "authors": [
+    "Jaka Hudoklin <jakahudoklin@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "jquery": "~2.1.0",
+    "underscore": "~1.6.0"
+  }
+}

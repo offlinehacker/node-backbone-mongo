@@ -7,6 +7,9 @@
 
   "use strict";
 
+  var winston = require('winston');
+  var logger = winston.loggers.get('stats');
+
   function errMsg(msg) {
     return {'error': {'message': msg.toString()}};
   }
@@ -16,8 +19,12 @@
   //
   function getListController(model) {
     return function (req, res) {
-      //console.log('list', req.body);
-      model.find({}, function (err, result) {
+      logger.info(
+        'getting %ss', model.modelName,
+        { model: model.modelName,  user: req.get("X-Auth-Token")}
+      );
+      
+      model.find({user: req.get("X-Auth-Token")}, function (err, result) {
         if (!err) {
           res.send(result);
         } else {
@@ -32,7 +39,12 @@
   //
   function getCreateController(model) {
     return function (req, res) {
-      //console.log('create', req.body);
+      logger.info(
+        'creating %s', model.modelName,
+        { model: model.modelName, user: req.get("X-Auth-Token"),
+          content: req.body }
+      );
+
       var m = new model(req.body);
       m.save(function (err) {
         if (!err) {
@@ -49,7 +61,12 @@
   //
   function getReadController(model) {
     return function (req, res) {
-      //console.log('read', req.body);
+      logger.info(
+        'reading %s', model.modelName,
+        { model: model.modelName, user: req.get("X-Auth-Token"), 
+          content: req.body }
+      );
+
       model.findById(req.params.id, function (err, result) {
         if (!err) {
           res.send(result);
@@ -65,7 +82,12 @@
   //
   function getUpdateController(model) {
     return function (req, res) {
-      //console.log('update', req.body);
+      logger.info(
+        'updating %s', model.modelName,
+        { model: model.modelName, user: req.get("X-Auth-Token"), 
+          id: req.params.id }
+      );
+
       model.findById(req.params.id, function (err, result) {
         var key;
         for (key in req.body) {
@@ -87,7 +109,12 @@
   //
   function getDeleteController(model) {
     return function (req, res) {
-      //console.log('delete', req.body);
+      logger.info(
+        'deleting %s', model.modelName,
+         { model: model.modelName, user: req.get("X-Auth-Token"), 
+           id: req.params.id }
+      );
+
       model.findById(req.params.id, function (err, result) {
         if (err) {
           res.send(errMsg(err));
