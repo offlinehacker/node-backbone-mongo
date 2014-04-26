@@ -59,4 +59,7 @@ rec {
   tests.deployment = (import ./tests/deployment.nix {
     system = builtins.currentSystem;
   }).test;
+
+  # Import build of slides
+  slides = (import ./default.nix { inherit system; }).slides;
 }

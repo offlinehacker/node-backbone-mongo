@@ -62,4 +62,12 @@ rec {
     }
     export -f npm_install_modules
   '');
+
+  # Create slides
+  slides = pkgs.runCommand "${projectName}-${version}-slides" { buildInputs = []; } ''
+    mkdir -p $out/nix-support
+    cp -R ${src}/slides $out
+    echo "doc manual $out/slides index.html" >> $out/nix-support/hydra-build-products
+  '';
+
 }
