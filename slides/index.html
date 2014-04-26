@@ -104,12 +104,13 @@
 						<script type="text/template">
 							## What's nix?
 
-							- it's a functional language
+							- it's a simple functional language
 							- Created by **Eelco Dolstra** in 2003
 							- Made for building stuff -> package manager
 							- Result of execution is allways deterministic
 							- It runs on linux, windows, mac
 							- supports distributed cross platform execution (builds)
+							- supports rollbacks
 
 							go to: http://nixos.org/nix
 
@@ -203,9 +204,9 @@ stdenv.mkDerivation rec {
 							## NixOs
 
 							- Every cool package manager has linux distro behind
-							- We have nixos, and it's not os in a normal sense
+							- We have nixos, and it's part of nix pacakages repository
 							- It's **built determinsitically**
-							- You administrate it by changing config file
+							- You administrate it by changing config file (declearative configuration)
 							- Don't confuse it with puppet, chef or ansible,
 							  they hook on os, we build it from scratch
 							- It's **fully functional linux os (including your favourite desktop)**
@@ -220,6 +221,8 @@ stdenv.mkDerivation rec {
 					<section data-markdown>
 						<script type="text/template">
 							## NixOs configuration
+
+							You put it into **/etc/nixos/configuration.nix** and call **nixos-rebuild**
 
 							<pre>
     { config, pkgs, ... }:
@@ -237,6 +240,7 @@ stdenv.mkDerivation rec {
 
 							- Every cool os has cloud deployment tool
 							- We have nixops
+							- Declerative deployments
 							- Currently only amazon, hetzner, virtualbox
 
 							go to: https://github.com/NixOS/nixops
@@ -647,25 +651,42 @@ in {
 					</section>
 				</section>
 
-				<section data-markdown>
-					<script type="text/template">
-						## Moje izkusnje
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## Limitations of nix
+	
+							- Small community (only 200 on irc)
+							- Some things are still exprerimental
+							- Documetation could be better (we are working on this)
+							- It's rough on edges
+							- Steep learning curve for non-documented
+							  things
 
-						- Super privzete nastavitve za povprecne stranke
-						- Popolno nobenega razloga, da ga nebi dodali deploy skriptam
-						- Lahko pomaga pri saniranju/detektiranju slabih streznikov
-						- Relativno fleksibilna preprosta platforma za custom resitve
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## Join us!
 
-					</script>
+							If you find nix cool it's really really easy to
+							start contributing, as simple as forking relevant nix
+							projects and making a pull request.
+
+							- url: http://nixos.org
+							- irc: #nixos on #freenode
+
+						</script>
+					</section>
 				</section>
 
 				<section data-markdown>
 					<script type="text/template">
 						# Q&A
 
-						jakahudoklin@gmail.com
-
-						@offlinehacker
+						- mail: jakahudoklin@gmail.com
+						- nick: @offlinehacker #freenode
+						- project&slides: https://github.com/offlinehacker/todos
 					</script>
 				</section>
 
