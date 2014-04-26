@@ -1,13 +1,13 @@
 a @ {
   pkgs ? import <nixpkgs> {}
-, nix-rehash ? import <nix-rehash>
+, rehash ? import <nix-rehash>
 , projectName ? "todos"
 , platforms ? [ "x86_64-linux" "i686-linux" ]
 }:
 
 with pkgs;
 with pkgs.lib;
-with nix-rehash;
+with rehash;
 
 rec {
   # Build package for all the platforms
