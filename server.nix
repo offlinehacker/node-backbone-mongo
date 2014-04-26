@@ -15,10 +15,6 @@ in {
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 22 ];
   networking.firewall.allowPing = true;
-  # Port forwarding using iptables
-  networking.firewall.extraCommands = ''
-    iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-  '';
 
   # Enable mongodb
   services.mongodb.enable = true;
@@ -57,6 +53,33 @@ in {
       Restart = "always";
      };
   };
+
+  services.nginx.enable = true;
+  services.nginx.config = ''
+events {
+  worker_connections  4096;  ## Default: 1024
+}
+ 
+http {
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+  keepalive_timeout 65;
+  types_hash_max_size 2048;
+  include ${pkgs.nginx}/conf/mime.types;
+  default_type application/octet-stream;
+  gzip on;
+  gzip_disable "msie6";
+
+  server { # simple reverse-proxy
+    listen       80; 
+    location / {
+      proxy_pass      http://127.0.0.1:8080;
+    }
+  }
+}
+  '';
+
 
   # And lastly we ensure the user we run our application as is created
   users.extraUsers = {

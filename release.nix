@@ -10,10 +10,12 @@ with pkgs.lib;
 with nix-rehash;
 
 rec {
+  # Build package for all the platforms
   build = genAttrs platforms (system:
     (import ./default.nix { inherit system; }).app
   );
 
+  # User services
   services = system: reService {
     name = "${projectName}";
     inherit system;
@@ -38,9 +40,11 @@ rec {
     ];
   };
 
+  # Development environemnt
   dev = genAttrs platforms (system:
     with import <nixpkgs> { inherit system; };
 
+    # We use myEnvFun for environment
     myEnvFun {
       name = "${projectName}";
       buildInputs = [(services system) git gitAndTools.gitflow];
