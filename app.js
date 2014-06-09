@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
 var winston = require("winston"),
-    winston_logstash = require('winston-logstash');
+winston_logstash = require('winston-logstash');
 
-winston.add(winston.transports.Logstash, {
-});
+winston.add(winston.transports.Logstash, {});
 winston.loggers.add('app', {
   console: {
     level: 'debug',
@@ -37,9 +36,9 @@ var express = require('express')
 app.configure(function () {
   // enable web server logging; pipe those log messages through winston
   var winstonStream = {
-      write: function(message, encoding){
-          logger.debug(message.replace(/\n$/, ''));
-      }
+    write: function(message, encoding){
+      logger.debug(message.replace(/\n$/, ''));
+    }
   };
 
   app.set('views', __dirname + '/views');
@@ -66,10 +65,13 @@ if(process.env.VCAP_SERVICES){
   var dbcreds = services['mongodb'][0].credentials;
 }
 
-if(dbcreds){
+if(dbcreds) {
   logger.info(dbcreds);
-  mongoose.connect(dbcreds.host, dbcreds.db, dbcreds.port, {user: dbcreds.username, pass: dbcreds.password});
-}else{
+  mongoose.connect(
+    dbcreds.host, dbcreds.db, dbcreds.port,
+    {user: dbcreds.username, pass: dbcreds.password}
+  );
+} else {
   mongoose.connect("127.0.0.1", "todomvc", 27017);
 }
 

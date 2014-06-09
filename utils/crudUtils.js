@@ -21,7 +21,7 @@
     return function (req, res) {
       logger.info(
         'getting %ss', model.modelName,
-        { model: model.modelName,  user: req.get("X-Auth-Token")}
+        { model: model.modelName, user: req.get("X-Auth-Token")}
       );
       
       model.find({user: req.get("X-Auth-Token")}, function (err, result) {
@@ -41,7 +41,7 @@
     return function (req, res) {
       logger.info(
         'creating %s', model.modelName,
-        { model: model.modelName, user: req.get("X-Auth-Token"),
+         { model: model.modelName, user: req.get("X-Auth-Token"),
           content: req.body }
       );
 
@@ -51,10 +51,10 @@
           res.send(m);
         } else {
           res.send(errMsg(err));
-        }
-      });
-    };
-  }
+         }
+       });
+     };
+  } 
 
   //------------------------------
   // Read
@@ -64,7 +64,7 @@
       logger.info(
         'reading %s', model.modelName,
         { model: model.modelName, user: req.get("X-Auth-Token"), 
-          content: req.body }
+           content: req.body }
       );
 
       model.findById(req.params.id, function (err, result) {
@@ -74,8 +74,8 @@
           res.send(errMsg(err));
         }
       });
-    };
-  }
+     };
+  } 
 
   //------------------------------
   // Update
